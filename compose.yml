@@ -1,0 +1,44 @@
+version: "3"
+
+services:
+
+  db:
+    image: mysql:8.0
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD: mysql
+    networks:
+      - projeto
+    volumes:
+      - db-data:/var/lib/mysql/data
+
+  phpmyadmin:
+    image: phpmyadmin:5.2
+    restart: always
+    ports:
+      - 8080:80
+    networks:
+      - projeto
+    environment:
+      - PMA_ARBITRARY=1
+    depends_on:
+      - db
+
+  api:
+    image: python:3.10
+    volumes:
+      - ./fast_api:/usr/api
+    depends_on:
+      - db
+    networks:
+      - projeto
+    ip: 172.17.0.2
+    run: apt-get update && apt-get install software-properties-common -y && add-apt-repository ppa:deadsnakes/ppa -y && apt-get update && apt install python3.10 && apt install python3-pip -y && pip install fastapi && pip install uvicorn
+    workdir: /usr/api
+    command: ["uvicorn", "api:projeto", "--host", "172.17.0.2", "--port", "8000"]
+
+networks:
+  projeto:
+
+volumes:
+  db-data:
