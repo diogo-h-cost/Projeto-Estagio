@@ -2,43 +2,56 @@ version: "3"
 
 services:
 
-  db:
-    image: mysql:8.0
-    restart: always
-    environment:
-      - MYSQL_ROOT_PASSWORD: mysql
-    networks:
-      - projeto
-    volumes:
-      - db-data:/var/lib/mysql/data
+    db:
+        image: mysql:8.0
+        restart: always
+        environment:
+            MYSQL_DATABASE: "estagio"
+            MYSQL_ROOT_PASSWORD: "mysql"
+        networks:
+            projeto:
+                ipv4_address: 172.188.0.3
+        ports:
+            - 3306:3306
+        volumes:
+            - db-data:/var/lib/mysql
 
-  phpmyadmin:
-    image: phpmyadmin:5.2
-    restart: always
-    ports:
-      - 8080:80
-    networks:
-      - projeto
-    environment:
-      - PMA_ARBITRARY=1
-    depends_on:
-      - db
+    phpmyadmin:
+        image: phpmyadmin:5.2
+        restart: always
+        ports:
+            - 8080:80
+        networks:
+            projeto:
+                ipv4_address: 172.188.0.4
+        environment:
+            PMA_ARBITRARY: "1"
+        depends_on:
+            - db
 
-  api:
-    image: python:3.10
-    volumes:
-      - ./fast_api:/usr/api
-    depends_on:
-      - db
-    networks:
-      - projeto
-    ip: 172.17.0.2
-    run: apt-get update && apt-get install software-properties-common -y && add-apt-repository ppa:deadsnakes/ppa -y && apt-get update && apt install python3.10 && apt install python3-pip -y && pip install fastapi && pip install uvicorn
-    workdir: /usr/api
-    command: ["uvicorn", "api:projeto", "--host", "172.17.0.2", "--port", "8000"]
+    api:
+        image: base_api:1.0
+        volumes:
+            - ./fast_api:/usr/aplication
+        depends_on:
+            - phpmyadmin
+        networks:
+            projeto:
+                ipv4_address: 172.188.0.5
+        working_dir: /usr/aplication
+        ports:
+            - 8000:8000
+        command:
+            - /bin/bash
+            - -c
+            - uvicorn api:projeto --host 172.188.0.5 --port 8000 --reload
 
 networks:
-  projeto:
+    projeto:
+        ipam:
+            driver: default
+            config:
+                - subnet: 172.188.0.0/24
 
 volumes:
-  db-data:
+    db-data:
