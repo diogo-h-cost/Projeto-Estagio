@@ -9,6 +9,6 @@ RUN add-apt-repository ppa:deadsnakes/ppa -y \
 RUN apt-get install -y python3.10 \
     && apt-get install -y python3-pip
 
-RUN pip install fastapi uvicorn tortoise-orm==0.19 pydantic aiomysql
+RUN pip install fastapi uvicorn SQLAlchemy pydantic mysql-connector-python
 
 CMD ["bash"]
