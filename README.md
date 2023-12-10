@@ -1,16 +1,10 @@
 # Sistema de cadastro
 
------------------
-
 Este sistema realiza o cadastramento de produtos no banco de dados por meio de uma API. O sistema permite aos usuários cadastrar um produto e suas variações, como tambem atualiza-lo, deleta-lo, e fazer buscas especificas ou exibir todos produtos cadastrados com suas variações.
-
------------------
 
 ## Inicio
 
 Essas instruções permitirão que você obtenha uma cópia do projeto em operação na sua máquina local para fins de desenvolvimento e teste.
-
------------------
 
 ### Pré-requisitos 📝
 
