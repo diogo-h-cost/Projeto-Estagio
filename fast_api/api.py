@@ -1,9 +1,9 @@
-from config import session
-from entities import Products, ProductVariants
+from configs.config import session
+from entitie.entities import Products, ProductVariants
 from fastapi import FastAPI
-from models_pyd import ProdPyd, ProdVarPyd
+from pydantics.models_pyd import ProdPyd, ProdVarPyd
 from sqlalchemy import delete, update
-from tables import banco, table1, table2
+from table.tables import banco, table1, table2
 
 session.execute(banco)
 
