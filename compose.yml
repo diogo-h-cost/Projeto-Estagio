@@ -32,7 +32,7 @@ services:
     api:
         image: base_api:1.0
         volumes:
-            - ./fast_api:/usr/aplication
+            - .:/usr/aplication
         depends_on:
             - phpmyadmin
         networks:
@@ -44,7 +44,7 @@ services:
         command:
             - /bin/bash
             - -c
-            - uvicorn api:projeto --host 172.188.0.5 --port 8000 --reload
+            - uvicorn fast_api.api:projeto --host 172.188.0.5 --port 8000 --reload
 
 networks:
     projeto:
