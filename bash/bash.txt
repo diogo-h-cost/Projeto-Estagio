@@ -1,0 +1,33 @@
+
+VER CONTAINER PYTHON BASH
+docker container logs projeto-estagio_api_1
+
+VER CONTAINER BANCO BASH
+docker container logs projeto-estagio_db_1
+
+SUBIR COMPOSE VSCODE
+docker-compose -f compose.yml up
+
+DESCER COMPOSE VSCODE
+docker-compose -f compose.yml down
+
+EXCLUIR VOLUME BANCO
+docker volume rm projeto-estagio_db-data
+
+** CRIAR IMG DO DOCKERFILE
+docker build -t base_api:1.0 -f Dockerfile.yml .
+
+>> Dockerfile:
+
+apt-get update                                                      ATUALIZAR PACOTES
+apt-get install software-properties-common -y                        PACOTE Q PERMITE ADD REPOSITORY
+add-apt-repository ppa:deadsnakes/ppa -y                              ADD REPOSITORY
+apt-get update                                                         ATUALIZAR PACOTES
+apt install python3.10                                                  INSTALAR PYTHON
+apt install python3-pip -y                                               INSTALAR O PIP
+pip install fastapi uvicorn SQLAlchemy pydantic mysql-connector-python    INSTALAR FASTAPI / UVICORN / SQLAlchemy / PYDANTIC / Conector
+
+
+
+apt-get update && apt-get install software-properties-common -y && add-apt-repository ppa:deadsnakes/ppa -y && apt-get update && apt install python3.10 
+&& apt install python3-pip -y && pip install fastapi uvicorn SQLAlchemy pydantic mysql-connector-python
